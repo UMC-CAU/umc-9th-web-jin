@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import HomePage from "./component/HomePage";
+import AboutPage from "./component/AboutPage";
+import ContactPage from "./component/ContactPage";
+
+const NotFound = () => <h1>404 Not Found</h1>
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pathname, setPathname] = useState(window.location.pathname);
+  useEffect(() => {
+    const handlePopstate = () => {
+      setPathname(window.location.pathname);
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+    return () => window.removeEventListener("popstate", handlePopstate);
+  }, []);
+
+  const navigate = (url: string) => {
+    setPathname(url);
+    history.pushState({},"", url);
+  };
+
+  let Page; 
+  switch (pathname) {
+    case "/":
+    case "/home":
+      Page = <HomePage />;
+      break;
+    case "/about":
+      Page = <AboutPage />;
+      break;
+    case "/contact":
+      Page = <ContactPage />
+      break;
+    default :
+      Page = <NotFound /> 
+  };
+
+  console.log('rendering check');
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+    <div className="w-screen h-screen items-center flex flex-col"> 
+      <nav className="justify-center m-10 border-10 border-gray-200 rounded-3xl bg-gray-200">
+        <a href="/home" onClick={(e) => {
+        e.preventDefault(); 
+        navigate("/home");
+        }} 
+        className={`m-15 transition-colors 
+          ${pathname === "/home" || pathname === "/" ? "font-bold" : ''}`}> 
+        Home 
+        </a> 
+
+        <a href="/about" onClick={(e) => {
+          e.preventDefault();
+          navigate("/about");
+          }}
+          className={`m-15 transition-colors 
+          ${pathname === "/about" ? "font-bold" : ''}`}> 
+            About
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+
+        <a href="/contact" onClick={(e) => {
+          e.preventDefault();
+          navigate("/contact")
+        }}
+        className={`m-15 transition-colors 
+          ${pathname === "/contact" ? "font-bold" : ''}`}> 
+          Contact
         </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </nav>
+      <main className="flex flex-col items-center w-3/4">{Page}</main>
+    </div>
     </>
-  )
+  );
+
 }
 
-export default App
+export default App; 
+
