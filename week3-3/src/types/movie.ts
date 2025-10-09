@@ -1,3 +1,4 @@
+
 export type Movie = {
     adult: boolean;
     backdrop_paths: string;

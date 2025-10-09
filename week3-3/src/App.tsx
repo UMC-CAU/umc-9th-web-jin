@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
     errorElement: <NotFoundPage />,
     children: [
-    {
+      {
       path: 'movies/:category',
       element: <MoviePage />,
       index: true,
