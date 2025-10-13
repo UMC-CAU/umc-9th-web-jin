@@ -23,7 +23,7 @@ const LoginPage = () => {
         try{
             const response = await postSignin(values);
             console.log("로그인 성공", response);
-
+            alert('로그인이 완료되었습니다!')
             localStorage.setItem("accessToken", response.data.accessToken);
 
             navigate('/');
