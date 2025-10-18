@@ -1,15 +1,23 @@
-import { useNavigate } from "react-router-dom";
-import { postSignin } from "../apis/auth";
 import useForm from "../hooks/useForm";
 import { validateSignin } from "../utils/validate";
 import type { UserSigninInformation } from "../utils/validate";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const LoginPage = () => {
+    const {login, accessToken} = useAuth();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (accessToken){
+            navigate('/')
+        }
+    }, [navigate, accessToken]); 
 
-    const { values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
+
+    const {values, errors, touched, getInputProps} = useForm<UserSigninInformation>({
         initialValue: {
             email: "",
             password: "",
@@ -18,21 +26,12 @@ const LoginPage = () => {
     });
 
     const handleSubmit = async() => {
-        console.log(values);
+        await login(values); 
+        console.log('로그인 완료');
+    };
 
-        try{
-            const response = await postSignin(values);
-            console.log("로그인 성공", response);
-            alert('로그인이 완료되었습니다!')
-            localStorage.setItem("accessToken", response.data.accessToken);
-
-            navigate('/');
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            console.error("로그인 오류", error)
-            alert(error?.message || "로그인 중 오류가 발생했습니다.");
-        }
+    const handleGoogleLogin = () => {
+    window.location.href = "https://umc-web.kyeoungwoon.kr/v1/auth/google/login";
     };
 
     // 오류가 하나라도 있거나 입력값이 비어있으면 버튼 비활성화
@@ -64,7 +63,20 @@ const LoginPage = () => {
                 type='button' 
                 onClick={handleSubmit} 
                 disabled={isDisabled}
-                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">Log in</button>
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">
+                Log in</button>
+
+
+                <button
+                type='button' 
+                onClick={handleGoogleLogin}
+                className="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-medium hover:bg-blue-700 transition-colors cursor-pointer disabled:bg-gray-300">
+                    <div
+                    className="flex items-center justify-center gap-4">
+                    <img src={'/images/google.svg'} alt='Google Logo Image'/>
+                    <span>구글 로그인</span>
+                    </div>
+                </button>
             </div>
         </div>
     )

@@ -4,7 +4,7 @@ export const useLocalStorage = (key:string) => {
     try {
         window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 };
 
@@ -15,7 +15,7 @@ const getItem = () => {
         return item ? JSON.parse(item) : null;
     } catch(e) {
         console.log(e);
-    };
+    }
 };
 
 const removeItem = () => {

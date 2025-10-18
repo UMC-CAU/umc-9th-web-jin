@@ -11,7 +11,7 @@ const SignupPage = () => {
       {step === 1 ? (
         <>
           <SignupStep1 onNext={() => setStep(2)} setSignupResult={setSignupResult} />
-          {signupResult && <div className="text-green-500 text-sm">{signupResult}</div>}
+          {signupResult && <div className="text-red-500 text-sm">{signupResult}</div>}
         </>
       ) : (
         <SignupStep2 />

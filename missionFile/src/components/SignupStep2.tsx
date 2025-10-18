@@ -9,7 +9,7 @@ const SignupStep2 = () => {
     if (!nickname.trim()) return alert("닉네임을 입력해주세요!")
     console.log("닉네임 등록:", nickname)
     alert('회원가입이 완료되었습니다!')
-    navigate("/login")
+    navigate("/")
     }
 
     return (

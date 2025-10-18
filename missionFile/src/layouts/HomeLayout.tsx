@@ -5,7 +5,10 @@ const HomeLayout = () => {
     return (
     <div className="flex flex-col justify-center items-center">
         <Navbar />
+        <main>
         <Outlet />
+        </main>
+        <footer></footer>
     </div>
     );
 };
