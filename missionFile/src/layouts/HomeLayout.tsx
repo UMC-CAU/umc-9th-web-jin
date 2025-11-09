@@ -1,14 +1,15 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar2 from "../components/Navbar2";
+import Footer from "../components/Footer";
 
 const HomeLayout = () => {
     return (
-    <div className="flex flex-col justify-center items-center">
-        <Navbar />
-        <main>
+    <div className="h-dvh flex flex-col">
+        <Navbar2 />
+        <main className="flex-1 mt-10">
         <Outlet />
         </main>
-        <footer></footer>
+        <Footer />
     </div>
     );
 };
