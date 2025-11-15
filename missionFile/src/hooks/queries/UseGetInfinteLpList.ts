@@ -11,7 +11,7 @@ function useGetInfinteLpList(limit:number,search:string,order:PAGINATION_ORDER,)
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages) => {
             console.log(lastPage, allPages);
-            return lastPage.data.hasNext? lastPage.data.nextCuror : undefined;
+            return lastPage.data.hasNext? lastPage.data.nextCursor : undefined;
         },
     });
 }

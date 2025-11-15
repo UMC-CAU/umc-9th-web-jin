@@ -18,6 +18,8 @@ const HomePage = () => {
     // inView 그 요소가 화면에 보이면 true
     const {ref, inView} = useInView({threshold:0})
 
+    console.log(lps?.pages);
+
     useEffect(() => {
         if(inView) {
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -37,7 +39,6 @@ const HomePage = () => {
     return (
     <div className="container mx-auto px-4 py-6">
     <input value={search} onChange={(e) => setSearch(e.target.value)} />
-
     <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"}>
     {lps?.pages
     ?.map((page)=> page.data.data)
