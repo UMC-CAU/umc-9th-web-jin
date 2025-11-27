@@ -8,6 +8,8 @@ interface LpCardProps {
 const LpCard = ({lp}: LpCardProps) => {
     const navigate = useNavigate();
 
+    console.log(lp.id);
+    
     return(
         <div
         onClick={() => navigate(`/lps/${lp.id}`)}
