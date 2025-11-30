@@ -1,24 +1,26 @@
-import { useDispatch } from "../hooks/useCustonRedux";
-import { decrease, increase, removeItem } from "../slices/cartSlice";
+import { useCartActions } from "../hooks/useCartStore";
 import type { Lp } from "../types/cart";
 
     interface CartItemProps {
         lp: Lp;
     }
     const CartItem = ({ lp }: CartItemProps) => {
-        const dispatch = useDispatch();
 
-        const handleIncreaseCount = () => {
-            dispatch(increase({ id: lp.id }))
+        const { increase, decrease, removeItem } = useCartActions();
+
+        const handleIcreaseAmount = () => {
+            increase(lp.id);
         };
 
-        const handleDecreaseCount = () => {
-            if (lp.amount === 1) {
-                dispatch(removeItem({ id: lp.id }));
+        const handleDecreaseAmount = () => {
+            if(lp.amount === 1) {
+                removeItem(lp.id);
                 return;
             }
-            dispatch(decrease({ id: lp.id }))
+
+            decrease(lp.id);
         };
+
 
     return(
         <>
@@ -34,9 +36,9 @@ import type { Lp } from "../types/cart";
                 <p className="text-sm font-bold text-gray-600">{lp.price}원</p>
             </div>
             <div className="flex items-center">
-                <button onClick={handleDecreaseCount} className="px-3 py-2 bg-gray-300 text-gray-800 rounded-l hover:bg-gray-400 cursor-pointer">-</button>
+                <button onClick={handleDecreaseAmount} className="px-3 py-2 bg-gray-300 text-gray-800 rounded-l hover:bg-gray-400 cursor-pointer">-</button>
                 <span className="px-4 py-[3px] border-gray-300">{lp.amount}</span>
-                <button onClick={handleIncreaseCount} className="px-3 py-2 bg-gray-300 text-gray-800 rounded-r hover:bg-gray-400 cursor-pointer">+</button>
+                <button onClick={handleIcreaseAmount} className="px-3 py-2 bg-gray-300 text-gray-800 rounded-r hover:bg-gray-400 cursor-pointer">+</button>
             </div>
         </div>
         </>

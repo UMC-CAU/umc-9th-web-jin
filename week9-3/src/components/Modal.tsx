@@ -1,21 +1,25 @@
-
-import { useDispatch, useSelector } from "../hooks/useCustonRedux";
-import { clearCart } from "../slices/cartSlice";
-import { closeModal } from "../slices/modalSlice";
+import { useCartActions } from "../hooks/useCartStore";
+import { useModalActions, useModalInfo } from "../hooks/useModal";
 
 
 const ModalAlert = () => {
-        const { message, isOpen } = useSelector((state) => state.modal);
 
-        const dispatch = useDispatch();
-    
+        const { clearCart } = useCartActions();
+
+        const { message, isOpen } = useModalInfo();
+        const { closeModal } = useModalActions();
+
+        // modal close + clear cart
+
         const handleConfirm = () => {
-            dispatch(clearCart());
-            dispatch(closeModal());
+            closeModal();
+            clearCart();
         };
 
+        // modal close
+
         const handleClose = () => {
-            dispatch(closeModal());
+            closeModal();
         };
 
         if(!isOpen) return null;

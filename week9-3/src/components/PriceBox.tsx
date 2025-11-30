@@ -1,15 +1,16 @@
-import { useDispatch, useSelector } from "../hooks/useCustonRedux";
-import { openModal } from "../slices/modalSlice";
+import { useCartInfo } from "../hooks/useCartStore";
+import { useModalActions } from "../hooks/useModal";
 import ModalAlert from "./Modal";
 
 const Pricebox = () => {
 
-    const { total } = useSelector((state) => state.cart);
-    const dispatch = useDispatch();
+    const { total } = useCartInfo();
+    const { openModal } = useModalActions();
 
     const handleOpenModal = () => {
-        dispatch(openModal("정말 삭제하시겠습니까?"))
-    }
+        openModal("정말 삭제하시겠습니까?");
+    };
+
 
     return (
         <div className="py-12 flex justify-between">
