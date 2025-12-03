@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import CountButton from "./components/CountButton";
 import TextInput from "./components/TextInput";
 
-export default function useCallbackPage() {
+export default function UseCallbackPage() {
     const [count, setCount] = useState<number>(0);
     const [text, setText] = useState<string>("");
 
